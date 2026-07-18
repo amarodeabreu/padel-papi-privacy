@@ -1,0 +1,41 @@
+# Deploys the privacy policy pages to GitHub Pages on every push.
+#
+# This repo is a public mirror that exists only to serve the privacy policy
+# for the Padel Papi iOS app. The pages are authored in the private
+# `padel-papi` repo (under site/) and copied here when they change.
+
+name: Deploy privacy site
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
