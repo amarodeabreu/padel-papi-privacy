@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Padel Papi</title>
+<style>
+:root{--brand:#158c59;--deep:#0e6b44}
+body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(150deg,var(--brand),var(--deep));min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center}
+.card{padding:40px 24px;max-width:420px}
+h1{font-size:28px;margin:12px 0 6px}
+p{opacity:.92;line-height:1.5}
+.btn{display:block;background:#fff;color:var(--deep);font-weight:800;text-decoration:none;padding:14px;border-radius:14px;margin:10px 0}
+.btn.ghost{background:transparent;color:#fff;border:1.5px solid #ffffff88}
+small{opacity:.75}
+</style></head><body><div class="card">
+<div style="font-size:56px">🎾</div>
+<h1>Padel Papi</h1>
+<p id="msg">Book padel lessons in three taps — real availability, no account needed.</p>
+<a class="btn" id="open" href="#">Open in the app</a>
+<a class="btn ghost" href="https://apps.apple.com/search?term=padel%20papi">Get the app (App Store)</a>
+<small>Already installed? Tap “Open in the app”.</small>
+<script>
+var q = new URLSearchParams(location.search);
+var target = "padelpapi://";
+if (q.get("club")) { target = "padelpapi://club/" + encodeURIComponent(q.get("club")); }
+else if (q.get("c")) {
+  target = "padelpapi://coach/" + q.get("c");
+  if (q.get("s")) { target += "/slot/" + q.get("s"); }
+}
+document.getElementById("open").href = target;
+if (q.get("s")) { document.getElementById("msg").textContent = "You've been invited to a padel session — open it in the Padel Papi app."; }
+else if (q.get("club")) { document.getElementById("msg").textContent = "See every coach at this club in the Padel Papi app."; }
+</script>
+</div></body></html>
